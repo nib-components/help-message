@@ -1,6 +1,7 @@
 var transition =  require('transition-auto');
 var transitions = require('has-transitions')();
 var Tip =         require('tip');
+var emitter     = require('emitter');
 
 /**
  * Help message view
@@ -10,26 +11,39 @@ var Tip =         require('tip');
  * @constructor
  */
 function HelpMessage(options) {
+  this.opened = false;
+
   this.triggerElement = options.trigger;
   this.messageElement = options.message;
-
-  //bind to events
-  this.triggerElement.addEventListener('click', this.onTrigger.bind(this));
-  this.messageElement.addEventListener('transitionend', this.onTransitionEnd.bind(this));
 
   this.messageElement.style.height = '0';
   this.messageElement.style.marginTop = '0';
   this.messageElement.classList.remove('is-collapsed');
 
   this.tip = new Tip();
+
+  //bind to events
+  this.triggerElement.addEventListener('click', this.onTrigger.bind(this));
+  this.messageElement.addEventListener('transitionend', this.onTransitionEnd.bind(this));
+
+  //hide the message when the page is hidden
+  this.page = options.page;
+  if (this.page) {
+    var self = this;
+    this.page.on('hidden', function() {
+      self.close();
+    });
+  }
+
 }
+emitter(HelpMessage.prototype);
 
 /**
  * Get whether the message is open
  * @returns   {Boolean}
  */
 HelpMessage.prototype.isOpen = function() {
-  return this.messageElement.style.marginTop === '';
+  return this.opened;
 };
 
 /**
@@ -37,13 +51,19 @@ HelpMessage.prototype.isOpen = function() {
  * @returns   {HelpMessage}
  */
 HelpMessage.prototype.open = function() {
-  //show the tip and message elements
-  this.messageElement.style.marginTop = '';
-  transition(this.messageElement, 'height', 'auto');
+  var self = this;
 
+  //show the tip and message elements
   this.tip.show();
+
   this.tip.prependTo(this.messageElement);
   this.tip.positionAt(this.triggerElement, 'bottom');
+
+  this.messageElement.style.marginTop = '';
+  transition(this.messageElement, 'height', 'auto', function() {
+    self.opened = true;
+    self.emit('opened');
+  });
 
   return this;
 };
@@ -53,12 +73,15 @@ HelpMessage.prototype.open = function() {
  * @returns   {HelpMessage}
  */
 HelpMessage.prototype.close = function() {
+  var self = this;
 
   //hide the tip and message elements
-  transition(this.messageElement, 'height', '0');
-  this.messageElement.style.marginTop = '0';
-
   this.tip.hide();
+  this.messageElement.style.marginTop = '0';
+  transition(this.messageElement, 'height', '0', function() {
+    self.opened = false;
+    self.emit('closed');
+  });
 
   return this;
 };
