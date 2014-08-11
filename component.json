@@ -1,0 +1,14 @@
+{
+  "name": "help-message",
+  "scripts": [
+    "index.js"
+  ],
+  "styles": [
+    "index.css"
+  ],
+  "dependencies": {
+    "digitaledgeit/js-transition-auto": "^0.1.1",
+    "anthonyshort/has-transitions": "^0.3.0",
+    "nib-health-funds/tip": "^0.1.4"
+  }
+}

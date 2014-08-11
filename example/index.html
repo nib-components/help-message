@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../build/build.css" />
+</head>
+<body>
+
+<div style="margin-bottom:10px;">
+    <span class="control-help-trigger v2-icon v2-icon--small v2-icon--info-circle-white rg-mx1at4" href="#are-you-covered-help">Trigger here</span>
+</div>
+<div class="control-help-message control-help-message--in-a-box is-collapsed" id="are-you-covered-help">
+    <p>Applicants not covered by the policy cannot claim the Australian Government Rebate on Private Health Insurance (excluding child only policies) and Employers and trustees of organisations cannot claim the Australian Government Rebate on Private Health Insurance on policies paid on behalf of employees.</p>
+</div>
+
+
+<script src="../build/build.js"></script>
+<script>
+    var HelpMessage = require('help-message');
+
+    // === bootstrap help message triggers ===
+    //bind to each help message trigger
+    var messages = [];
+    var triggers = document.querySelectorAll('.control-help-trigger');
+    for (var i=0; i<triggers.length; ++i) {
+        var trigger = triggers[i];
+
+        var message = new HelpMessage({
+            trigger: trigger,
+            message: document.querySelector(trigger.getAttribute('href'))
+        });
+
+        messages.push(message);
+    }
+</script>
+</body>
+</html>
