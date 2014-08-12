@@ -58,7 +58,7 @@ HelpMessage.prototype.open = function() {
   var self = this;
 
   //show the tip and message elements
-  this.tip.show();
+  this.tip.reposition().show();
 
   this.message.style.marginTop = '';
   self.message.classList.remove('is-closed');
