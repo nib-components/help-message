@@ -18,8 +18,6 @@ function HelpMessage(options) {
   this.page     = options.page;
 
   this.message.style.height = '0';
-  this.message.style.marginTop = '0';
-  this.message.classList.remove('is-collapsed');
 
   this.tip = new Tip();
   this.tip
@@ -31,7 +29,6 @@ function HelpMessage(options) {
   this.trigger.addEventListener('click', this.onTrigger.bind(this));
 
   //hide the message when the page is hidden
-
   if (this.page) {
     var self = this;
     this.page.on('hidden', function() {
@@ -58,9 +55,10 @@ HelpMessage.prototype.open = function() {
   var self = this;
 
   //show the tip and message elements
-  this.tip.reposition().show();
-
-  this.message.style.marginTop = '';
+  this.tip
+    .reposition()
+    .show()
+  ;
   self.message.classList.remove('is-closed');
   transition(this.message, 'height', 'auto', function() {
     self.opened = true;
@@ -81,7 +79,6 @@ HelpMessage.prototype.close = function() {
 
   //hide the tip and message elements
   this.tip.hide();
-  this.message.style.marginTop = '0';
   self.message.classList.remove('is-opened');
   transition(this.message, 'height', '0', function() {
     self.opened = false;

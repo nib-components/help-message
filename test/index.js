@@ -17,7 +17,7 @@ describe('help-message', function() {
 
     //create the trigger element
     message = document.createElement('div');
-    message.className = 'control-help-message is-collapsed';
+    message.className = 'control-help-message is-closed';
     message.style.transitionDuration = '0s'; //test with transitions disabled?
     message.innerHTML = 'La la la la';
     document.body.appendChild(message);
@@ -36,9 +36,9 @@ describe('help-message', function() {
     document.body.removeChild(message);
   });
 
-  it('should be collapsed on creation', function() {
+  it('should be closed on creation', function() {
     assert.equal('0px', message.style.height);
-    assert(!message.classList.contains('is-collapsed'));
+    assert(message.classList.contains('is-closed'));
     assert(!msg.isOpen());
   });
 
@@ -69,7 +69,7 @@ describe('help-message', function() {
 
   });
 
-  it('should collapse when the page is hidden', function(done) {
+  it('should close when the page is hidden', function(done) {
 
     msg.on('opened', function() {
 

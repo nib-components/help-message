@@ -18,7 +18,7 @@
   margin-top: 11px;
 }
 
-.control-help-message.is-collapsed {
+.control-help-message.is-closed {
   height: 0;
   margin-top: 0;
 }
