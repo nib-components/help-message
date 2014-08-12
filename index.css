@@ -11,6 +11,9 @@
   font-weight: 300;
   text-transform: none;
   background-color: #444;
+}
+
+.csstransitions .control-help-message {
   transition: height 0.5s, margin-top 0.75s;
 }
 

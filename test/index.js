@@ -18,7 +18,7 @@ describe('help-message', function() {
     //create the trigger element
     message = document.createElement('div');
     message.className = 'control-help-message is-closed';
-    message.style.transitionDuration = '0s'; //test with transitions disabled?
+    //document.body.className = 'csstransitions'; //test with transitions?
     message.innerHTML = 'La la la la';
     document.body.appendChild(message);
 
