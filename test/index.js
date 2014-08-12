@@ -9,15 +9,26 @@ describe('help-message', function() {
   var message;
 
   beforeEach(function() {
-    msg = new HelpMessage({
-      trigger: trigger = document.createElement('div'),
-      message: message = document.createElement('div'),
-      page: new Emitter()
-    });
+
+    //create the message element
+    trigger = document.createElement('div');
     trigger.innerHTML = 'ba ba ba';
-    message.innerHTML = 'La la la la';
     document.body.appendChild(trigger);
+
+    //create the trigger element
+    message = document.createElement('div');
+    message.className = 'control-help-message is-collapsed';
+    message.style.transitionDuration = '0s'; //test with transitions disabled?
+    message.innerHTML = 'La la la la';
     document.body.appendChild(message);
+
+    //create the help message
+    msg = new HelpMessage({
+      trigger:  trigger,
+      message:  message,
+      page:     new Emitter()
+    });
+
   });
 
   afterEach(function() {

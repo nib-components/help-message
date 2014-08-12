@@ -4,22 +4,55 @@
     <meta charset="UTF-8">
     <title></title>
     <link rel="stylesheet" href="../build/build.css" />
+    <style>
+
+        .parent {
+            position: relative;
+        }
+
+        .no-transitions * {
+            transition-duration: 0;
+        }
+
+        .paragraph {
+            margin: 0;
+            padding: 10px;
+        }
+
+    </style>
 </head>
 <body>
 
-<div style="margin-bottom:10px;">
-    <span class="control-help-trigger v2-icon v2-icon--small v2-icon--info-circle-white rg-mx1at4" href="#are-you-covered-help">Trigger here</span>
-</div>
-<div class="control-help-message control-help-message--in-a-box is-collapsed" id="are-you-covered-help">
-    <p>Applicants not covered by the policy cannot claim the Australian Government Rebate on Private Health Insurance (excluding child only policies) and Employers and trustees of organisations cannot claim the Australian Government Rebate on Private Health Insurance on policies paid on behalf of employees.</p>
+<div class="parent haz-transitions">
+
+    <h4>Haz Transitions:</h4>
+
+    <p class="paragraph">
+        Click <a class="control-help-trigger" href="#msg1">here</a> to show the message
+    </p>
+    <div class="control-help-message is-collapsed" id="msg1">
+        <p>Applicants not covered by the policy cannot claim the Australian Government Rebate on Private Health Insurance (excluding child only policies) and Employers and trustees of organisations cannot claim the Australian Government Rebate on Private Health Insurance on policies paid on behalf of employees.</p>
+    </div>
+
 </div>
 
+<div class="parent no-transitions">
+
+    <h4>No Transitions:</h4>
+
+    <p class="paragraph">
+        Click <a class="control-help-trigger" href="#msg2">here</a> to show the message
+    </p>
+    <div class="control-help-message is-collapsed" id="msg2">
+        <p>Applicants not covered by the policy cannot claim the Australian Government Rebate on Private Health Insurance (excluding child only policies) and Employers and trustees of organisations cannot claim the Australian Government Rebate on Private Health Insurance on policies paid on behalf of employees.</p>
+    </div>
+
+</div>
 
 <script src="../build/build.js"></script>
 <script>
     var HelpMessage = require('help-message');
 
-    // === bootstrap help message triggers ===
     //bind to each help message trigger
     var messages = [];
     var triggers = document.querySelectorAll('.control-help-trigger');

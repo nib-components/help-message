@@ -13,21 +13,25 @@ var emitter     = require('emitter');
 function HelpMessage(options) {
   this.opened = false;
 
-  this.triggerElement = options.trigger;
-  this.messageElement = options.message;
+  this.trigger  = options.trigger;
+  this.message  = options.message;
+  this.page     = options.page;
 
-  this.messageElement.style.height = '0';
-  this.messageElement.style.marginTop = '0';
-  this.messageElement.classList.remove('is-collapsed');
+  this.message.style.height = '0';
+  this.message.style.marginTop = '0';
+  this.message.classList.remove('is-collapsed');
 
   this.tip = new Tip();
+  this.tip
+    .prependTo(this.message)
+    .positionAt(this.trigger, 'bottom')
+  ;
 
   //bind to events
-  this.triggerElement.addEventListener('click', this.onTrigger.bind(this));
-  this.messageElement.addEventListener('transitionend', this.onTransitionEnd.bind(this));
+  this.trigger.addEventListener('click', this.onTrigger.bind(this));
 
   //hide the message when the page is hidden
-  this.page = options.page;
+
   if (this.page) {
     var self = this;
     this.page.on('hidden', function() {
@@ -56,12 +60,12 @@ HelpMessage.prototype.open = function() {
   //show the tip and message elements
   this.tip.show();
 
-  this.tip.prependTo(this.messageElement);
-  this.tip.positionAt(this.triggerElement, 'bottom');
-
-  this.messageElement.style.marginTop = '';
-  transition(this.messageElement, 'height', 'auto', function() {
+  this.message.style.marginTop = '';
+  self.message.classList.remove('is-closed');
+  transition(this.message, 'height', 'auto', function() {
     self.opened = true;
+    self.transitioning = null;
+    self.message.classList.add('is-opened');
     self.emit('opened');
   });
 
@@ -77,9 +81,12 @@ HelpMessage.prototype.close = function() {
 
   //hide the tip and message elements
   this.tip.hide();
-  this.messageElement.style.marginTop = '0';
-  transition(this.messageElement, 'height', '0', function() {
+  this.message.style.marginTop = '0';
+  self.message.classList.remove('is-opened');
+  transition(this.message, 'height', '0', function() {
     self.opened = false;
+    self.transitioning = null;
+    self.message.classList.add('is-closed');
     self.emit('closed');
   });
 
@@ -106,14 +113,6 @@ HelpMessage.prototype.onTrigger = function(event) {
     this.open();
   }
 
-};
-
-/**
- * Transition end
- * @private
- */
-HelpMessage.prototype.onTransitionEnd = function() {
-  this.transitioning = null;
 };
 
 module.exports = HelpMessage;
