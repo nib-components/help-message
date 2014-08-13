@@ -27,10 +27,10 @@
 }
 
 .control-help-message .tip--direction-up {
-  margin-top: 3px;
-  border-left-width: 8px;
-  border-right-width: 8px;
-  border-bottom-width: 8px;
+  margin-top: 5px;
+  border-left-width: 6px;
+  border-right-width: 6px;
+  border-bottom-width: 6px;
   border-bottom-color: #444;
 }
 
