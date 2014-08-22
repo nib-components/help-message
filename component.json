@@ -7,10 +7,10 @@
     "index.css"
   ],
   "dependencies": {
-    "component/emitter": "^1.1.3",
-    "digitaledgeit/js-transition-auto": "^0.1.1",
-    "anthonyshort/has-transitions": "^0.3.0",
-    "nib-health-funds/tip": "^0.1.4"
+    "component/emitter": "~1.1.3",
+    "digitaledgeit/js-transition-auto": "~0.1.1",
+    "anthonyshort/has-transitions": "~0.3.0",
+    "nib-health-funds/tip": "~0.1.4"
   },
   "development": {
     "dependencies": {
