@@ -87,4 +87,9 @@ describe('help-message', function() {
     msg.open();
 
   });
+
+  it('should default target from trigger', function() {
+    assert.equal(msg.trigger,msg.target);
+  });
+
 });

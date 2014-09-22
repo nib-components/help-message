@@ -8,6 +8,7 @@ var emitter     = require('emitter');
  * @param   {Object}        options
  * @param   {HTMLElement}   options.trigger     The trigger element
  * @param   {HTMLElement}   options.message     The message element
+ * @param   (HTMLElement)   options.target      The message target element
  * @constructor
  */
 function HelpMessage(options) {
@@ -15,6 +16,7 @@ function HelpMessage(options) {
 
   this.trigger  = options.trigger;
   this.message  = options.message;
+  this.target   = options.target || this.trigger;
   this.page     = options.page;
 
   this.message.style.height = '0';
@@ -22,11 +24,13 @@ function HelpMessage(options) {
   this.tip = new Tip();
   this.tip
     .prependTo(this.message)
-    .positionAt(this.trigger, 'bottom')
+    .positionAt(this.target, 'bottom')
   ;
 
   //bind to events
-  this.trigger.addEventListener('click', this.onTrigger.bind(this));
+  if(this.trigger){
+    this.trigger.addEventListener('click', this.onTrigger.bind(this));
+  }
 
   //hide the message when the page is hidden
   if (this.page) {
