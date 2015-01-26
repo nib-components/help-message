@@ -10,12 +10,12 @@ describe('help-message', function() {
 
   beforeEach(function() {
 
-    //create the message element
+    //create the trigger element
     trigger = document.createElement('div');
     trigger.innerHTML = 'ba ba ba';
     document.body.appendChild(trigger);
 
-    //create the trigger element
+    //create the message element
     message = document.createElement('div');
     message.className = 'control-help-message is-closed';
     document.body.className = 'csstransitions'; //test with transitions?
@@ -108,7 +108,6 @@ describe('help-message', function() {
 
   });
 
-
   it('should not emit `closed` when already open', function(done) {
     var count = 0;
 
@@ -136,6 +135,10 @@ describe('help-message', function() {
       .open()
     ;
 
+  });
+
+  it('should default the target to be the trigger when no target is specified', function() {
+    assert.equal(msg.trigger, msg.target);
   });
 
 });
