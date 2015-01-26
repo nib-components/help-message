@@ -11,7 +11,8 @@ var emitter     = require('emitter');
  * @constructor
  */
 function HelpMessage(options) {
-  this.opened = false;
+  this.opening  = false;
+  this.opened   = false;
 
   this.trigger  = options.trigger;
   this.message  = options.message;
@@ -28,6 +29,7 @@ function HelpMessage(options) {
   //bind to events
   this.trigger.addEventListener('click', this.onTrigger.bind(this));
 
+  //TODO: adds a dependency on the page - maybe remove?
   //hide the message when the page is hidden
   if (this.page) {
     var self = this;
@@ -54,7 +56,12 @@ HelpMessage.prototype.isOpen = function() {
 HelpMessage.prototype.open = function() {
   var self = this;
 
+  if (this.opening || this.opened) {
+    return this;
+  }
+
   //show the tip and message elements
+  self.opening = true;
   this.tip
     .reposition()
     .show()
@@ -62,6 +69,7 @@ HelpMessage.prototype.open = function() {
   self.message.classList.remove('is-closed');
   transition(this.message, 'height', 'auto', function() {
     self.opened = true;
+    self.opening = false;
     self.transitioning = null;
     self.message.classList.add('is-opened');
     self.emit('opened');
@@ -76,6 +84,10 @@ HelpMessage.prototype.open = function() {
  */
 HelpMessage.prototype.close = function() {
   var self = this;
+
+  if (!this.opened && !this.opening) {
+    return this;
+  }
 
   //hide the tip and message elements
   this.tip.hide();

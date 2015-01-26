@@ -18,7 +18,7 @@ describe('help-message', function() {
     //create the trigger element
     message = document.createElement('div');
     message.className = 'control-help-message is-closed';
-    //document.body.className = 'csstransitions'; //test with transitions?
+    document.body.className = 'csstransitions'; //test with transitions?
     message.innerHTML = 'La la la la';
     document.body.appendChild(message);
 
@@ -87,4 +87,55 @@ describe('help-message', function() {
     msg.open();
 
   });
+
+  it('should not emit `opened` when already open', function(done) {
+    var count = 0;
+
+    msg
+      .on('opened', function() {
+        ++count;
+        if (count == 1) {
+          this.open();
+        }
+      })
+      .open()
+    ;
+
+    setTimeout(function() {
+      assert.equal(count, 1);
+      done();
+    }, 1000);
+
+  });
+
+
+  it('should not emit `closed` when already open', function(done) {
+    var count = 0;
+
+    msg
+      .on('opened', function() {
+
+        // --- the actual test ---
+
+        msg
+          .on('closed', function() {
+            ++count;
+            if (count == 1) {
+              this.close();
+            }
+          })
+          .close()
+        ;
+
+        setTimeout(function() {
+          assert.equal(count, 1);
+          done();
+        }, 1000);
+
+      })
+      .open()
+    ;
+
+  });
+
 });
